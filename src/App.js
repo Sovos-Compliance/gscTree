@@ -2,7 +2,6 @@ import Tree from 'react-d3-tree';
 import gscData from './data/gsc.json';
 
 const renderNode = ({ nodeDatum, toggleNode }) => {
-  console.log(nodeDatum);
   return (
     <g title={nodeDatum.attributes && nodeDatum.attributes.Description}>
       <circle
