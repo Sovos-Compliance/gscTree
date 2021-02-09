@@ -43,6 +43,7 @@ async function buildTree() {
     parent.children.push({
       id: row.ID,
       name: row.GS_CODE,
+      description: row.DESCRIPTION,
       attributes: {
         Description: row.DESCRIPTION,
       },
@@ -55,7 +56,7 @@ async function buildTree() {
 async function writeGscData() {
   const data = await buildTree();
   fs.writeFileSync(
-    path.resolve(__dirname, '../src/50data/gsc.json'),
+    path.resolve(__dirname, '../src/data/gsc.json'),
     JSON.stringify(data)
   );
 }
