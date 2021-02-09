@@ -26,6 +26,7 @@ const renderNode = ({ nodeDatum, toggleNode }) => {
 function App() {
   const [filtered, setFiltered] = useState(gscData);
   const [filterVal, setFilterVal] = useState('');
+  const [allExpanded, setAllExpanded] = useState(false);
 
   const filterData = (e) => {
     const targetVal = e.target.value;
@@ -49,17 +50,25 @@ function App() {
     );
     setFilterVal(targetVal);
     setFiltered(filtered);
+    setAllExpanded(true);
   };
 
   const clear = () => {
     setFilterVal('');
     setFiltered(gscData);
+    setAllExpanded(false);
   };
   return (
     <div style={{ margin: 20 }}>
       Filter: <input type="text" onChange={filterData} value={filterVal} />
       &nbsp;
       <button onClick={clear}>Clear</button>
+      <br />
+      <button
+        onClick={() => setAllExpanded((prevAllExpanded) => !prevAllExpanded)}
+      >
+        {allExpanded ? 'Collapse All' : 'ExpandAll'}
+      </button>
       <div
         style={{
           border: '1px solid black',
@@ -69,9 +78,10 @@ function App() {
         }}
       >
         <Tree
+          key={`${filterVal}-${allExpanded}`}
           data={filtered}
           collapsible={true}
-          initialDepth={2}
+          initialDepth={!allExpanded ? 2 : undefined}
           renderCustomNodeElement={renderNode}
           translate={{ x: 50, y: 375 }}
           zoom={0.2}
